@@ -37,18 +37,21 @@ jobs:
         run: newman run ./AutomacaoPartners.postman_collection.json -e ./Partners.postman_environment.json --reporters cli, -r htmlextra --reporter-htmlextra-export ./docs/index.html
 
       - name: Aceita pull resquest se passar no teste
-        uses: car-on-sale/action-pull-request-another-repo@v1.3.1
+        uses: thzois/autobot@v1.0.0
         env:
-          API_TOKEN_GITHUB: ${{ env.RACKATON_TOKEN }}
+          GH_ACCESS_TOKEN: ${{ secrets.RACKATON_TOKEN }}
         with:
-          source_folder: './'
-          destination_repo: 'Qa-Coders/new-backend'
-          destination_folder: './'
-          destination_base_branch: 'develop'
-          destination_head_branch: 'feature/bugs'
-          user_email: 'pablue@gmail.com'
-          user_name: 'Pablo-Oliveira'
-          pr_title: 'feat: pipeline_aprovado'
+          git_config_user_email: 'pablue@gmail.com'
+          git_config_user_name: 'Pablo-Oliveira'
+          target_repo: 'Qa-Coders/new-backend'
+          source_dir: 'docs/'
+          source_dir_copy_glob: '!(*.yaml)'
+          target_dir: ''
+          pr_target_repo_base_branch: 'develop'
+          pr_target_repo_compare_branch: 'feature/bugs2023'
+          pr_title: '[DevOps] [2023-09-091 02:00:00] Automated changes'
+          pr_description_text: '[DevOps] [2023-09-091 02:00:00] Automated changes'
+          pr_label: 'Qa.coders_teste_api'
 
       # Runs a set of commands using the runners shell
       - name: Step 4 Archive Production artifacts
