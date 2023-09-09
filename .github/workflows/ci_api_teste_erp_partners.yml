@@ -36,22 +36,35 @@ jobs:
       - name: Step 3 Execute collection
         run: newman run ./AutomacaoPartners.postman_collection.json -e ./Partners.postman_environment.json --reporters cli, -r htmlextra --reporter-htmlextra-export ./docs/index.html
 
-      - name: Aceita pull resquest se passar no teste
-        uses: thzois/autobot@v1.0.0
+      # - name: Aceita pull resquest se passar no teste
+      #   uses: thzois/autobot@v1.0.0
+      #   env:
+      #     GH_ACCESS_TOKEN: ${{ secrets.RACKATON_TOKEN }}
+      #   with:
+      #     git_config_user_email: 'pablue@gmail.com'
+      #     git_config_user_name: 'Pablo-Oliveira'
+      #     target_repo: 'Qa-Coders/new-backend'
+      #     source_dir: 'docs/'
+      #     source_dir_copy_glob: '!(*.yaml)'
+      #     target_dir: ''
+      #     pr_target_repo_base_branch: 'develop'
+      #     pr_target_repo_compare_branch: 'feature/bugs202309'
+      #     pr_title: '[DevOps] [2023-09-091 02:00:00] Automated changes'
+      #     pr_description_text: '[DevOps] [2023-09-091 02:00:00] Automated changes'
+      #     pr_label: 'Qa.coders_teste_api'
+
+
+      - name: Merge to Destination Repo
+        run: |
+          git config --global user.name "Pablo-Oliveira"
+          git config --global user.email "pablue@gmail.com"
+          git remote add destination https://github.com/Qa-Coders/new-backend.git
+          git fetch destination
+          git checkout -b feature/bugs202309  # A branch que será mergeada
+          git merge origin/develop  # A branch de origem
+          git push destination feature/bugs202309:develop
         env:
-          GH_ACCESS_TOKEN: ${{ secrets.RACKATON_TOKEN }}
-        with:
-          git_config_user_email: 'pablue@gmail.com'
-          git_config_user_name: 'Pablo-Oliveira'
-          target_repo: 'Qa-Coders/new-backend'
-          source_dir: 'docs/'
-          source_dir_copy_glob: '!(*.yaml)'
-          target_dir: ''
-          pr_target_repo_base_branch: 'develop'
-          pr_target_repo_compare_branch: 'feature/bugs202309'
-          pr_title: '[DevOps] [2023-09-091 02:00:00] Automated changes'
-          pr_description_text: '[DevOps] [2023-09-091 02:00:00] Automated changes'
-          pr_label: 'Qa.coders_teste_api'
+          GITHUB_TOKEN: ${{ secrets.RACKATON_TOKEN }}
 
       # Runs a set of commands using the runners shell
       - name: Step 4 Archive Production artifacts
