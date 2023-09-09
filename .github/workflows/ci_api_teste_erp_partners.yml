@@ -17,7 +17,7 @@ jobs:
     - name: Accept Pull Request
       run: |
         # Configure o URL da API do GitHub para aceitar o Pull Request
-        API_URL="https://api.github.com/repos/seu-usuario/seu-segundo-repo/pulls/126/merge"
+        API_URL="https://api.github.com/repos/Qa-Coders/new-backend/pulls/126/merge"
         
         # Use o token de acesso pessoal armazenado como segredo
         GITHUB_TOKEN=$RACKATON_TOKEN
