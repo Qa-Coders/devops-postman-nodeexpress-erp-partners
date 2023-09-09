@@ -58,7 +58,7 @@ jobs:
         run: |
           git config --global user.name "Pablo-Oliveira"
           git config --global user.email "pablue@gmail.com"
-          git remote add destination https://github.com/Qa-Coders/new-backend.git
+          git remote add destination https://github.com/Qa-Coders/new-backend
           git fetch destination
           git checkout -b feature/bugs202309  # A branch que será mergeada
           git merge origin/develop  # A branch de origem
