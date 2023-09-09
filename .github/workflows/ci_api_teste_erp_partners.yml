@@ -48,7 +48,7 @@ jobs:
           source_dir_copy_glob: '!(*.yaml)'
           target_dir: ''
           pr_target_repo_base_branch: 'develop'
-          pr_target_repo_compare_branch: 'feature/bugs202309'
+          pr_target_repo_compare_branch: 'feature/bugs202308'
           pr_title: '[DevOps] [2023-09-091 02:00:00] Automated changes'
           pr_description_text: '[DevOps] [2023-09-091 02:00:00] Automated changes'
           pr_label: 'Qa.coders_teste_api'
