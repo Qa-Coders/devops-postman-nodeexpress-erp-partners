@@ -1,66 +1,28 @@
-name: ERP Postman Automation API Test 
+name: Teste auto merge 
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
-
-  # Allows you to run this workflow manually from the Actions tab
+  # push:
+  #   branches: [ "master" ]
+    
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  accept_pull_request:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Step 1 Check version Newman and Node
-        run: |
-          newman --version
-          node --version
-      # Runs a single command using the runners shell
-      - name: Step 2 Install Newman-Reporter-HtmlExtra
-        run: sudo npm install -g newman-reporter-htmlextra
-
-      # Runs a single command using the runners shell
-      - name: Step 3 Execute collection
-        run: newman run ./AutomacaoPartners.postman_collection.json -e ./Partners.postman_environment.json --reporters cli, -r htmlextra --reporter-htmlextra-export ./docs/index.html
-
-      - name: Aceita pull resquest se passar no teste
-        uses: car-on-sale/action-pull-request-another-repo@version
-        env:
-          API_TOKEN_GITHUB: ${{ env.RACKATON_TOKEN }}
-        with:
-          source_folder: './'
-          destination_repo: 'Qa-Coders/new-backend'
-          destination_folder: './'
-          destination_base_branch: 'develop'
-          destination_head_branch: 'feature/bugs'
-          user_email: 'pablue@gmail.com'
-          user_name: 'Pablo-Oliveira'
-          pr_title: 'feat: Implementadno bugs para teste automatizado na pipeline aprovado'
-
-      # Runs a set of commands using the runners shell
-      - name: Step 4 Archive Production artifacts
-        if: ${{ always() }} # This ensures the step runs even if the previous steps fail
-        uses: actions/upload-artifact@v3
-        with:
-          name: report
-          path: ./docs/index.html
-
-      - name: Step 5 Deploy do Report.html
-        if: ${{ always() }}
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          publish_dir: ./docs
+    - name: Accept Pull Request
+      run: |
+        # Configure o URL da API do GitHub para aceitar o Pull Request
+        API_URL="https://api.github.com/repos/seu-usuario/seu-segundo-repo/pulls/126/merge"
+        
+        # Use o token de acesso pessoal armazenado como segredo
+        GITHUB_TOKEN=$RACKATON_TOKEN
+        
+        # Envie uma solicitação POST com curl para aceitar o Pull Request
+        curl -X PUT -H "Authorization: token $GITHUB_TOKEN" $API_URL
+      env:
+        GITHUB_TOKEN_SECOND_REPO: ${{ secrets.GITHUB_TOKEN_SECOND_REPO }}
