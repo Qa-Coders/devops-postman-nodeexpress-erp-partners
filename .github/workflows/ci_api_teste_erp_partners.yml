@@ -36,6 +36,20 @@ jobs:
       - name: Step 3 Execute collection
         run: newman run ./AutomacaoPartners.postman_collection.json -e ./Partners.postman_environment.json --reporters cli, -r htmlextra --reporter-htmlextra-export ./docs/index.html
 
+      - name: Aceita pull resquest se passar no teste
+        uses: car-on-sale/action-pull-request-another-repo@version
+        env:
+          API_TOKEN_GITHUB: ${{ env.RACKATON_TOKEN }}
+        with:
+          source_folder: './'
+          destination_repo: 'Qa-Coders/new-backend'
+          destination_folder: './'
+          destination_base_branch: 'develop'
+          destination_head_branch: 'feature/bugs'
+          user_email: 'pablue@gmail.com'
+          user_name: 'Pablo-Oliveira'
+          pr_title: 'feat: Implementadno bugs para teste automatizado na pipeline aprovado'
+
       # Runs a set of commands using the runners shell
       - name: Step 4 Archive Production artifacts
         if: ${{ always() }} # This ensures the step runs even if the previous steps fail
