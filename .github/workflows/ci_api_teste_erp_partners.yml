@@ -37,7 +37,7 @@ jobs:
         run: newman run ./AutomacaoPartners.postman_collection.json -e ./Partners.postman_environment.json --reporters cli, -r htmlextra --reporter-htmlextra-export ./docs/index.html
 
       - name: Aceita pull resquest se passar no teste
-        uses: car-on-sale/action-pull-request-another-repo@version
+        uses: car-on-sale/action-pull-request-another-repo@v1.3.1
         env:
           API_TOKEN_GITHUB: ${{ env.RACKATON_TOKEN }}
         with:
